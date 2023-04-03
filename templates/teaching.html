@@ -51,7 +51,7 @@ Based on ChatGPT answer with prompt: Can you create an HTML file which displays 
 	</style>
 </head>
 <body>
-        <h1>Model was {{ model_correct | safe }}</h1>
+        <h1>{{ human_correct | safe }}Model was {{ model_correct | safe }}</h1>
 	<div class="container">
 		<div class="column">
                 <div class="header red">AI is incorrect</div>

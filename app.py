@@ -34,7 +34,8 @@ def index():
 
 @app.route("/", methods=["POST"])
 def index_post():
-  return redirect(url_for("teaching"))
+   current_app.human_answer = request.form["answer"]
+   return redirect(url_for("teaching"))
 
 @app.route('/teaching')
 def teaching():
@@ -47,13 +48,18 @@ def teaching():
     highlighted_context1 = highlight_random_words(context1.split(), "#FF0000")
     highlighted_context2 = highlight_random_words(context2.split(), "#008000")
 
+    has_human_answer = current_app.human_answer != ""
+    human_correct = current_app.human_answer == current_app.answer
+
     model_correct =  random.random() > 0.5
     model_correct_str = '<span style="background-color:#008000">Correct</span>' if model_correct \
         else  '<span style="background-color:#FF0000">Incorrect</span>'
+    human_correct_str = "" if not has_human_answer else "Human was " + ('<span style="background-color:#008000">Correct</span>; ' if human_correct \
+        else  '<span style="background-color:#FF0000">Incorrect</span>; ')
     current_app.model_correct = model_correct
 
     return render_template(
-        "teaching.html", model_correct=model_correct_str, context1=highlighted_context1,
+        "teaching.html", human_correct=human_correct_str, model_correct=model_correct_str, context1=highlighted_context1,
         question1=option1["question"], context2=highlighted_context2, question2=option2["question"]
     )
 
