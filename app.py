@@ -17,7 +17,7 @@ def highlight_random_words(words, color, N=20):
     # In "real setting", these would be highlights from feature importance methods like LIME
     word_idxs = random.sample(range(len(words)), N)
     context = [
-        '<span style="background-color:{0}">{1}</span>'.format(color, word) if i in word_idxs else word 
+        '<span style="background-color:{0}">{1}</span>'.format(color, word) if i in word_idxs else word
         for i, word in enumerate(words)
     ]
     return " ".join(context)
@@ -28,7 +28,7 @@ def index():
     current_app.answer = option["answer"]
     context = "\n".join(" ".join(e) for e in option["context"]["sentences"])
     return render_template(
-        "testing.html", context=context, question=option["question"], 
+        "testing.html", context=context, question=option["question"],
         correct_lessons=correct_lessons, incorrect_lessons=incorrect_lessons
     )
 
@@ -53,10 +53,10 @@ def teaching():
     current_app.model_correct = model_correct
 
     return render_template(
-        "teaching.html", model_correct=model_correct_str, context1=highlighted_context1, 
+        "teaching.html", model_correct=model_correct_str, context1=highlighted_context1,
         question1=option1["question"], context2=highlighted_context2, question2=option2["question"]
     )
- 
+
 @app.route("/teaching", methods=["POST"])
 def teaching_post():
     lesson = request.form["lesson"]
